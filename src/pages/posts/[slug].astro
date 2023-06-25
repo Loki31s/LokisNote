@@ -1,29 +1,30 @@
 ---
-import * as interfaces from '../../lib/interfaces.ts'
-import {
-  getPosts,
-  getAllPosts,
-  getRankedPosts,
-  getPostBySlug,
-  getPostsByTag,
-  getBlock,
-  getAllTags,
-  getAllBlocksByBlockId,
-  downloadFile,
-} from '../../lib/notion/client.ts'
-import {
-  getPostLink,
-  filePath,
-  extractTargetBlocks,
-} from '../../lib/blog-helpers.ts'
-import Layout from '../../layouts/Layout.astro'
-import PostDate from '../../components/PostDate.astro'
-import PostTags from '../../components/PostTags.astro'
-import PostTitle from '../../components/PostTitle.astro'
-import PostBody from '../../components/PostBody.astro'
-import PostRelativeLink from '../../components/PostRelativeLink.astro'
 import BlogPostsLink from '../../components/BlogPostsLink.astro'
 import BlogTagsLink from '../../components/BlogTagsLink.astro'
+import PostBody from '../../components/PostBody.astro'
+import PostDate from '../../components/PostDate.astro'
+import PostFeaturedImage from '../../components/PostFeaturedImage.astro'
+import PostRelativeLink from '../../components/PostRelativeLink.astro'
+import PostTags from '../../components/PostTags.astro'
+import PostTitle from '../../components/PostTitle.astro'
+import Layout from '../../layouts/Layout.astro'
+import {
+extractTargetBlocks,
+filePath,
+getPostLink,
+} from '../../lib/blog-helpers.ts'
+import * as interfaces from '../../lib/interfaces.ts'
+import {
+downloadFile,
+getAllBlocksByBlockId,
+getAllPosts,
+getAllTags,
+getBlock,
+getPostBySlug,
+getPosts,
+getPostsByTag,
+getRankedPosts,
+} from '../../lib/notion/client.ts'
 import styles from '../../styles/blog.module.css'
 
 export async function getStaticPaths() {
@@ -102,26 +103,27 @@ if (post.FeaturedImage && post.FeaturedImage.Url) {
   <div slot="main" class={styles.main}>
     <div class={styles.post}>
       <PostDate post={post} />
-      <PostTags post={post} />
+      <PostTags post={post}  enableLink={true}/>
       <PostTitle post={post} enableLink={false} />
+      <PostFeaturedImage post={post} />
       <PostBody blocks={blocks} />
-      <PostTags post={post} />
 
       <footer>
+        <PostTags post={post} enableLink={true}/>
         <PostRelativeLink prevPost={prevPost} nextPost={nextPost} />
       </footer>
     </div>
   </div>
 
-  <div slot="aside" class="aside">
+  <div slot="aside" class="aside" id="navigation">
     <BlogPostsLink
-      heading="Posts in the same category"
+      heading="Posts in the same tags"
       posts={postsHavingSameTag.filter(
         (p: interfaces.Post) => p.Slug !== post.Slug
       )}
     />
     <BlogPostsLink heading="Recommended" posts={rankedPosts} />
     <BlogPostsLink heading="Latest posts" posts={recentPosts} />
-    <BlogTagsLink heading="Categories" tags={tags} />
+    <BlogTagsLink heading="Tags" tags={tags} />
   </div>
 </Layout>

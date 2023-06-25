@@ -1,6 +1,6 @@
 ---
-import { Post } from '../lib/interfaces.ts'
 import { getPostLink } from '../lib/blog-helpers.ts'
+import { Post } from '../lib/interfaces.ts'
 import NoContents from './NoContents.astro'
 
 export interface Props {
@@ -46,7 +46,7 @@ const { heading, posts } = Astro.props
   .blog-posts-link {
   }
   .blog-posts-link h3 {
-    margin: 0;
+    margin: 1rem 0 0;
     padding-left: 0.4rem;
     color: #777;
     font-size: 0.95rem;

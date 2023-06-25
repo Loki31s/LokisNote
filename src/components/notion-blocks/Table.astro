@@ -1,6 +1,6 @@
 ---
-import * as interfaces from '../../lib/interfaces.ts'
-import RichText from './RichText.astro'
+import * as interfaces from '../../lib/interfaces.ts';
+import RichText from './RichText.astro';
 
 export interface Props {
   block: interfaces.Block
@@ -50,7 +50,9 @@ const { block } = Astro.props
   .table table {
     margin: 0.6rem 0;
   }
-  .table th,
+  .table th {
+    text-align: center;
+  }
   .table td {
     text-align: left;
   }
